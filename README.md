@@ -4,6 +4,8 @@
 
 ```
 /lex-lgpd
+|  ├── .gitignore
+|  ├── LICENSE
 |  ├── requirements.txt
 |  └── README.md
 ```
