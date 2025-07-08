@@ -4,8 +4,11 @@
 
 ```
 /lex-lgpd
-|  ├── .gitignore
-|  ├── LICENSE
-|  ├── requirements.txt
-|  └── README.md
+    ├── scr/
+    |   └── data_ingestion.py
+    |
+    ├── .gitignore
+    ├── LICENSE
+    ├── requirements.txt
+    └── README.md
 ```
