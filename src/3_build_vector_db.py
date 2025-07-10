@@ -33,7 +33,7 @@ def create_and_save_vector_db():
 
     # --- CARREGA MODELO DE EMBEDDINGS ---
     logging.info("Carregando o modelo SentenceTransformer...")
-    model = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
+    model = SentenceTransformer('neuralmind/bert-base-portuguese-cased')
 
     # --- GERAR EMBEDDINGS ---
     logging.info("Gerando embeddings para os chunks de texto... (Isso pode levar alguns minutos)")
