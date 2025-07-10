@@ -4,15 +4,17 @@ import logging
 import os
 
 # Configuração do logging
-logging.basicConfig(level=logging.INFO, format= '%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s - %(levelname)s - %(message)s',
+                    datefmt='%d/%m/%Y %H:%M:%S')
 
 def busca_e_salva_lgpd():
     """
     Busca o conteúdo da página da LGPD no site do Planalto,
     extrai o texto principal e o salva em um arquivo .txt
     """
-    URL = "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm"
-    RAW_DATA_PATH = os.path.join ("..", "data", "lgpd_raw_.txt")
+    URL = "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/L13709compilado.htm"
+    RAW_DATA_PATH = os.path.join ("..", "data", "raw", "lgpd_raw.txt")
     
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0',
@@ -25,10 +27,12 @@ def busca_e_salva_lgpd():
         response.raise_for_status()
 
         logging.info("Analisando o HTML da página...")
+
+        response.encoding = 'windows-1252'
         soup = BeautifulSoup(response.content, 'html.parser')
 
         # Buscando o artigo dentro do div
-        lista_de_artigos = soup.select('p.Artigo')
+        lista_de_artigos = soup.select('p.Artigo, p.MsoNormal')
 
         if lista_de_artigos:
             logging.info(f"Encontrados {len(lista_de_artigos)} artigos.")
@@ -50,7 +54,7 @@ def busca_e_salva_lgpd():
                 logging.info("Salvando em um arquivo de texto...")
                 f.write(lgpd_raw)
 
-            logging.info(f"Documento 'lgpd_raw.txt' salvo em: {RAW_DATA_PATH}")
+            logging.info(f"Documento salvo em: {RAW_DATA_PATH}")
             
         else:
             logging.error("Nenhum parágrafo com a classe 'Artigo' foi encontrado.")
